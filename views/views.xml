@@ -1,0 +1,145 @@
+<odoo>
+  <data>
+
+    <!-- FormView base -->
+      <record model="ir.ui.view" id="qc_inspection_formview_ppcustom">
+        <field name="name">qc.inspection.formview.ppcustom</field>
+        <field name="model">qc.inspection</field>
+        <field name="inherit_id" ref="quality_control.qc_inspection_form_view"/>
+        <field name="arch" type="xml">
+
+          <field name="object_id" position="after">
+            <field name="so_ref" />
+            <field name="product_ref" string="Product Reference" />
+            <field name="description" />
+          </field>
+          <field name="object_id" position="attributes">
+            <attribute name="attrs">{"readonly":[["state","not in",["draft","ready","waiting","success"]]]}</attribute>
+          </field>
+
+          <field name="product" position="attributes">
+            <attribute name="invisible">1</attribute>
+          </field>
+
+          <field name="qty" position="attributes">
+            <attribute name="string">Qty Kirim</attribute>
+          </field>
+          <field name="qty" position="after">
+            <field name="qty_sample" />
+          </field>
+
+        </field>
+      </record>
+
+    <!-- FormView inherit quality_control_mrp -->
+      <record model="ir.ui.view" id="qc_inspection_formview_ppcustom2">
+        <field name="name">qc.inspection.formview.ppcustom2</field>
+        <field name="model">qc.inspection</field>
+        <field name="inherit_id" ref="quality_control_mrp.qc_inspection_form_view_production"/>
+        <field name="arch" type="xml">
+
+          <field name="production" position="attributes">
+            <attribute name="invisible">1</attribute>
+          </field>
+
+        </field>
+      </record>
+
+    <!-- FormView inherit quality_control_stock -->
+      <record model="ir.ui.view" id="qc_inspection_formview_ppcustom3">
+        <field name="name">qc.inspection.formview.ppcustom3</field>
+        <field name="model">qc.inspection</field>
+        <field name="inherit_id" ref="quality_control_stock.qc_inspection_form_view_picking"/>
+        <field name="arch" type="xml">
+
+          <field name="picking" position="attributes">
+            <attribute name="invisible">1</attribute>
+          </field>
+
+        </field>
+      </record>
+
+    <!-- Notebook/Page -->
+      <record model="ir.ui.view" id="order_line_custom">
+        <field name="name">order.line.custom</field>
+        <field name="model">qc.inspection</field>
+        <field name="inherit_id" ref="quality_control.qc_inspection_form_view"/>
+        <field name="arch" type="xml">
+ 
+          <xpath expr="//notebook/page[1]" position="after">
+
+            <page string="Picking Reference">
+              <field name="child_line">
+                <tree string="Inspection lines" editable="bottom">
+                  <field name="parent_id" string="QC Number" attrs="{'readonly':1}" invisible="1" />
+                  <field name="picking_cst"/>
+                </tree>
+              </field>
+            </page>
+
+          </xpath>
+
+        </field>
+      </record>
+
+    <!-- TreeView base -->
+      <record model="ir.ui.view" id="qc_inspection_treeview_custom">
+        <field name="name">qc.inspection.treeview.custom</field>
+        <field name="model">qc.inspection</field>
+        <field name="inherit_id" ref="quality_control.qc_inspection_tree_view"/>
+        <field name="arch" type="xml">
+ 
+          <xpath expr="//field[@name='qty']" position="attributes">
+            <attribute name="string">Qty kirim (pcs)</attribute>
+          </xpath>
+
+          <field name="name" position="after">
+            <field name="date" />
+          </field>
+
+          <field name="product" position="attributes">
+            <attribute name="invisible">1</attribute>
+          </field>
+          <field name="qty" position="before">
+            <field name="child_line" string="Picking ref."/>
+            <field name="so_ref" string="SO ref." />
+            <field name="product_ref" string="Product ref." />
+            <field name="description" string="Desc." />
+          </field>
+          <field name="qty" position="after">
+            <field name="qty_sample" string="Qty sample (pcs)" />
+          </field>
+
+        </field>
+      </record>
+
+    <!-- TreeView inherit quality_control_stock--> 
+      <record model="ir.ui.view" id="qc_inspection_treeview_custom2">
+        <field name="name">qc.inspection.treeview.custom2</field>
+        <field name="model">qc.inspection</field>
+        <field name="inherit_id" ref="quality_control_stock.qc_inspection_tree_view_picking"/>
+        <field name="arch" type="xml">
+ 
+          <field name="picking" position="attributes">
+            <attribute name="invisible">1</attribute>
+          </field>
+
+        </field>
+      </record> 
+
+    <!-- TreeView inherit quality_control_mrp -->
+      <record model="ir.ui.view" id="qc_inspection_treeview_custom3">
+        <field name="name">qc.inspection.treeview.custom3</field>
+        <field name="model">qc.inspection</field>
+        <field name="inherit_id" ref="quality_control_mrp.qc_inspection_tree_view_production"/>
+        <field name="arch" type="xml">
+ 
+          <xpath expr="//field[@name='production']" position="attributes">
+            <attribute name="invisible">1</attribute>
+          </xpath>
+
+        </field>
+      </record> 
+
+  </data>
+</odoo>
